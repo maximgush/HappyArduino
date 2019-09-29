@@ -2,9 +2,6 @@
 
 #include "Component.h"
 
-#include <RTClib.h>
-#include <Wire.h>
-
 class RelayComponent : public Component
 {
 	bool isOn;
@@ -12,7 +9,7 @@ class RelayComponent : public Component
 public:
 	RelayComponent(const char* _name, int _pin)
 		: Component(_name)	
-		, pin()
+		, pin(_pin)
 		, isOn(false)
 	{
 	}
