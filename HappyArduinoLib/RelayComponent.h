@@ -1,16 +1,17 @@
 #pragma once
 
+#inclide "IOnOff.h"
 #include "Component.h"
 
-class RelayComponent : public Component
+class RelayComponent : public IOnOff, public Component
 {
 	bool isOn;
 	int pin;
 public:
-	RelayComponent(const char* _name, int _pin)
+	RelayComponent(const char* _name, int _pin, _isOn = false)
 		: Component(_name)	
 		, pin(_pin)
-		, isOn(false)
+		, isOn(_isOn)
 	{
 	}
 	virtual void Init()
