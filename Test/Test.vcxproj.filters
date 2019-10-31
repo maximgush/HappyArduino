@@ -18,9 +18,6 @@
     <ClCompile Include="Test.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\HappyArduinoLib\Component.cpp">
-      <Filter>HappyArduinoLib</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\HappyArduinoLib\Component.h">

@@ -5,26 +5,30 @@
 */
 
 #include "common.h"
-
+/*
 #include "Component.h"
 #include "RTCComponent.h"
 
 RTCComponent rtc("RTC DS3231");
-
+*/
 // the setup function runs once when you press reset or power the board
 void setup() {
-	ComponentsContainer::Instance().Init();
+//	ComponentsContainer::Instance().Init();
 }
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	ComponentsContainer::Instance().OnFrame();
+//	ComponentsContainer::Instance().OnFrame();
 }
 
-void main()
+#include <HappyArduinoLib/Utils/Array.h>
+
+int main()
 {
 	setup();
 
 	for (;;)
 		loop();
+
+	return 0;
 }
