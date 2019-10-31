@@ -1,4 +1,4 @@
-#include <GTest/gtest.h>
+#include "gtest/gtest.h"
 #include <HappyArduinoLib/Utils/Array.h>
 
 TEST( ArrayTest, Add ) {

@@ -2,16 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="Utils\Spline1DTest.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Utils\ArrayTest.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">

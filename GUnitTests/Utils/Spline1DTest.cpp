@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "gtest/gtest.h"
 #include <HappyArduinoLib/Utils/LinearSpline.h>
 
 TEST( Spline1DTest, Test ) {
