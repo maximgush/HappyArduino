@@ -16,7 +16,7 @@ float LinearSpline::GetValue(float x)
 	assert( CheckXLimits( x ) );
 
 	for(int i = 0; i < points.Size(); ++i ) {
-		if (x > points[i].x) {
+		if (x >= points[i].x) {
 			float k = ( points[i].y - points[i+1].y ) / ( points[i].x - points[i+1].x );
 			float b = k * points[i].x - points[i].y;
 

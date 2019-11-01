@@ -1,3 +1,5 @@
 #pragma once
 
-#include <Arduino.h>
+#include <string>
+#define String std::string
+//#include <Arduino.h>
