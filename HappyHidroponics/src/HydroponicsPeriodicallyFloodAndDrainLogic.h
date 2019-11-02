@@ -3,22 +3,23 @@ class HydroponicsPeriodicallyFloodAndDrainLogic
 public:
 	interface IChangeStateSubscriber
 	{
-		virtual OnChangeStateTo( State newState ) = 0;
+		virtual OnChangeState( State newState ) = 0;
 	};
 	
-  enum State
+  enum class State
   {	
-    hpfdlFlooding,	// Затопление	
-    hpfdlDraining,	// Осушение	
-    hpfdlWaiting,	// Ожидание следующего затопления
-    hpfdlStopped	// Система остановлена
+    Flooding,	// Затопление	
+    Draining,	// Осушение	
+    Waiting,	// Ожидание следующего затопления
+    Stopped	// Система остановлена
   };
   
-	HydroponicsPeriodicallyFloodAndDrainLogic(IRTC* _rtc, ITank* _tank)
+	HydroponicsPeriodicallyFloodAndDrainLogic(IRTC* _rtc, ITank* _tank, IOnOff* _pump)
 		: tank(_tank)
 		, rtc(_rtc)
 		, timeStartLastFloodDrainCycle(_rtc->GetCurrentTime())
-		, state(hpfdStopped)
+		, state(Stopped)
+		, pump(_pump)
 	{		
 	}
 	
@@ -26,26 +27,26 @@ public:
 	{
 		switch(state)
 		{
-			case hpfdlFlooding:
+			case Flooding:
 				if (tank->GetCurrentFilling() >= tankFullLevel)
-					ChangeState(hpfdlDraining);
+					changeStateTo(State::Draining);
 				break;
 				
-			case hpfdlDraining:
+			case Draining:
 				if (tank->GetCurrentFilling() <= tankEmptyLevel)
-					ChangeState(hpfdlWaiting);
+					changeStateTo(State::Waiting);
 				break;
 				
-			case hpfdlWaiting:
+			case Waiting:
 				rtc = GetCurrentTime();
 				// Вычисляем время прошедшее с последнего полива
 				short delta = rtc->GetCurrentTime() - timeStartLastFloodDrainCycle;
 				
 				if (delta >= cycleTimeOnCurrentTimeOfDay)
-					ChangeState(hpfdlDraining);				
+					changeStateTo(State::Draining);				
 				break;
 
-			case hpfdlStopped:
+			case Stopped:
 				return;
 				break;
 				
@@ -70,13 +71,13 @@ public:
 	// Запускает в работу
 	void Run()
 	{
-		ChangeStateTo(hpfdlFlooding);
+		changeStateTo(State::Flooding);
 	}
 
 	// Останавливает работу
 	void Stop()
 	{
-		ChangeStateTo(hpfdlStopped);
+		changeStateTo(State::Stopped);
 	}
   
 private:
@@ -90,7 +91,7 @@ private:
 	IOnOff * pump;
   
 	// Текущее состояние системы
-	HydroponicsPeriodicallyFloodAndDrainState state = hpfdlWaiting;
+	HydroponicsPeriodicallyFloodAndDrainState state = State::Waiting;
 	
 	// Время начала последнего цикла полива/отлива
 	DateTime timeStartLastFloodDrainCycle;
@@ -106,25 +107,25 @@ private:
 	// Уровень жидкости в баке, при котором бак считается опустошённым (от 0 до 1)
 	float tankEmptyLevel = 0.1;
 	
-	List<IChangeStateSubscriber*> changeStateToSubscribers;
+	List<IChangeStateSubscriber*> onChangeStateubscribers;
 		
-	void ChangeState(State newState)
+	void changeStateTo(State newState)
 	{
 		if (state == newState)
 			return;
 		
 		switch(newState)
 		{
-			case hpfdlFlooding:
+			case State::Flooding:
 				timeStartLastFloodDrainCycle = rtc->GetCurrentTime();
 				pump->On();		
 				break;
 				
-			case hpfdlDraining:
+			case State::Draining:
 				pump->Off();				
 				break;
 				
-			case hpfdlWaiting:
+			case State::Waiting:
 				pump->Off();
 				cycleTimeOnCurrentTimeOfDay = tableCycleTimeDependingOnTimeOfDay.GetValue(rtc->GetCurrentTime());			
 				break;
@@ -136,9 +137,9 @@ private:
 		}
 		
 		// TODO: оповещаем всех подписчиков о смене состояния
-		//foreach (IChangeStateSubscriber* subscriber : changeStateToSubscribers)
+		//foreach (IChangeStateSubscriber* subscriber : onChangeStateToSubscribers)
 		{
-		//	subscriber->OnChangeStateTo(newState);
+		//	subscriber->OnChangeState(newState);
 		}	
 	}
 }
