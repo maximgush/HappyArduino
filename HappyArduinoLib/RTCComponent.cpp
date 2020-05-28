@@ -20,7 +20,7 @@ void RTCComponent::OnFrame()
 {
 };
 
-void RTCComponent::GetKeyValues( KeyValue *keyValues, short &size )
+void RTCComponent::GetKeyValues( KeyValue *keyValues, short &size ) const
 {
 	DateTime nowTime = rtc.now();
 	char timeStr[10];

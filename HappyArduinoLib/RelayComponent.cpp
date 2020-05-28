@@ -11,7 +11,7 @@ public:
 	// Component
 	virtual void Init() override;
 	virtual void OnFrame() override;
-	virtual void GetKeyValues( KeyValue *keyValues, short &size ) override;
+	virtual void GetKeyValues( KeyValue *keyValues, short &size ) const override;
 	
 	// IOnOff
 	virtual bool IsOn() const override;
@@ -23,7 +23,7 @@ private:
 	int pin;	// номер пина к которому подключен управлящий реле сигнал
 };
 
-RelayComponent::RelayComponent( const char* _name, int _pin, bool _isOn = false )
+RelayComponent::RelayComponent( const char* _name, int _pin, bool _isOn )
 	: Component( _name )
 	, pin( _pin )
 	, isOn( _isOn )
@@ -41,7 +41,7 @@ void RelayComponent::RelayComponent::OnFrame()
 	digitalWrite( pin, isOn ? HIGH : LOW );
 };
 
-void RelayComponent::GetKeyValues( KeyValue *keyValues, short &size )
+void RelayComponent::GetKeyValues( KeyValue *keyValues, short &size ) const
 {
 	keyValues[size] = KeyValue( "Включено", String( IsOn() ) ); size++;
 };
@@ -51,13 +51,13 @@ bool RelayComponent::IsOn() const
 	return isOn;
 };
 
-void RelayComponent::On() override
+void RelayComponent::On()
 {
 	isOn = true;
 	digitalWrite( pin, HIGH );
 };
 
-void RelayComponent::Off() override
+void RelayComponent::Off()
 {
 	isOn = false;
 	digitalWrite( pin, LOW );

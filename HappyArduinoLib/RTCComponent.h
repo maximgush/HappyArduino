@@ -13,7 +13,7 @@ public:
 	// Component
 	virtual void Init() override;
 	virtual void OnFrame() override {};
-	virtual void GetKeyValues( KeyValue *keyValues, short &size ) override;
+	virtual void GetKeyValues( KeyValue *keyValues, short &size ) const override;
 	
 	// Метод для установки текущего времени и даты в сенсор
 	// Текущая время и даты берутся системные и хардкодятся при компиляции программы

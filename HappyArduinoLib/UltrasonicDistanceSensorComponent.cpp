@@ -8,6 +8,7 @@ UltrasonicDistanceSensorComponent::UltrasonicDistanceSensorComponent( const char
 	, distance( -1 )
 {
 }
+
 void UltrasonicDistanceSensorComponent::Init()
 {
 	pinMode( pinTrigger, OUTPUT );
@@ -15,6 +16,7 @@ void UltrasonicDistanceSensorComponent::Init()
 	digitalWrite( pinTrigger, LOW );
 	digitalWrite( pinEcho, LOW );
 }
+
 void UltrasonicDistanceSensorComponent::OnFrame()
 {
 	digitalWrite( pinTrigger, LOW );
@@ -29,7 +31,7 @@ void UltrasonicDistanceSensorComponent::OnFrame()
 	distance = duration / 58.2;
 };
 
-void UltrasonicDistanceSensorComponent::GetKeyValues( KeyValue *keyValues, short &size ) override
+void UltrasonicDistanceSensorComponent::GetKeyValues( KeyValue *keyValues, short &size ) const
 {
 	keyValues[size] = KeyValue( "Расстояние", String( distance ) ); size++;
 };
