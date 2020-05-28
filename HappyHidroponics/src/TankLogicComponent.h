@@ -1,21 +1,15 @@
 #include <ITank.h>
 
-// Интерфейс бака с жидкостью заполнение которого зависит от текущего заполнения другого бака
+// Бак с жидкостью
 class TankLogicComponent : public ITank
 {
 public:
-	TankLogicComponent( ITankVolumeSensor* _tankVolumeSensor) :
-		tankVolumeSensor(_tankVolumeSensor)
-	{
-	}
+	TankLogicComponent( ITankVolumeSensor* _tankVolumeSensor );
 	
 	// ITank
-	virtual void SetMaxCapacity(float _maxCapacity) override { maxCapacity = _maxCapacity; };	
-	virtual float GetMaxCapacity() override { return maxCapacity; }	
-	virtual float GetCurrentCapacity() override
-	{
-		return clamp(tankVolumeSensor->GetValue(), 0, maxCapacity);
-	};
+	virtual void SetMaxCapacity( float _maxCapacity ) override;
+	virtual float GetMaxCapacity() const override;
+	virtual float GetCurrentCapacity() const override;
 	
 private:	
 	// Максимальная ёмкость бака в литрах

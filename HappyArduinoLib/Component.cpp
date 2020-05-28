@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Component.h"
 
 ComponentsContainer& ComponentsContainer::Instance()
@@ -9,26 +7,24 @@ ComponentsContainer& ComponentsContainer::Instance()
 }
 
 ComponentsContainer::ComponentsContainer()
-	: size(0)
 {
 };
 
 void ComponentsContainer::Init()
 {
-	for (short i = 0; i < size; i++)
+	for (short i = 0; i < components.Size(); i++)
 		components[i]->Init();
 };
 
 void ComponentsContainer::OnFrame()
 {
-	for (short i = 0; i < size; i++)
+	for( short i = 0; i < components.Size(); i++ )
 		components[i]->OnFrame();
 };
 
 void ComponentsContainer::AddComponent(Component* component)
 {
-	components[size] = component;
-	size++;	
+	components.Add(component);
 }
 
 Component::Component(const char* _name)

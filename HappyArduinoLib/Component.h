@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "Utils\Array.h"
 
 class Component;
 
@@ -13,11 +14,10 @@ public:
 	void OnFrame();
 	void AddComponent(Component* component);
 	
-	Component** GetComponentsArray() { return components; };
-	short GetComponentsArraySize() { return size; };
+	const CArray<Component*>& GetComponentsArray() const { return components; };
+	short GetComponentsArraySize() const { return components.Size(); };
 private:
-	short size;
-	Component* components[25];
+	CArray<Component*> components;
 	
 	ComponentsContainer();
 };
@@ -43,6 +43,3 @@ public:
 	
 	virtual void GetKeyValues(KeyValue *keyValues, short &size) { size = 0;};
 };
-
-#include "Component.cpp"
-

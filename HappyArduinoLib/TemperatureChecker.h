@@ -1,13 +1,9 @@
-class ITemperatureSensor
-{
-public:
-	virtual float GetTemperature() = 0;
-};
+#include "interfaces/ITemperatureSensor.h"
 
 class TemperatureChecker
 {
 public:
-	TemperatureChecker(ITemperatureSensor* _temperatureSensor, float checkedValue,  )
+	TemperatureChecker(ITemperatureSensor* _temperatureSensor, float checkedValue )
 		: temperatureSensor( _temperatureSensor )
 	{
 
@@ -15,7 +11,7 @@ public:
 
 	virtual void Check() override
 	{
-		if( )
+		if( temperature > checkedValue )
 		DateTime dateTime = rtc->GetCurrentTime();
 		// TODO проверяем, что время адекватное
 		if (false)

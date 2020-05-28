@@ -2,16 +2,16 @@
 interface ITank
 {
 	// Возвращает максимальную вместительность бака в литрах
-	virtual float GetMaxCapacity() = 0;
+	virtual float GetMaxCapacity() const = 0;
 	
 	// Устанавливает текущий максимальный объём жидкости в баке в литрах
 	virtual void SetMaxCapacity(float _maxCapacity) = 0;
 	
 	// Возвращает текущий объём жидкости в баке в литрах
-	virtual float GetCurrentCapacity() = 0;	
+	virtual float GetCurrentCapacity() const = 0;	
 	
 	// Заполнение бака в %
-	virtual float GetCurrentFilling() { return GetCurrentCapacity() / GetMaxCapacity(); };
+	virtual float GetCurrentFilling() const { return GetCurrentCapacity() / GetMaxCapacity(); };
 }
 
 // Интерфейс сенсора измеряющего объём жидкости в баке
