@@ -42,6 +42,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\Arduino;$(ProjectDir)\Interfaces;$(ProjectDir)\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -49,6 +50,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Arduino\Arduino.h" />
+    <ClInclude Include="Arduino\WString.h" />
+    <ClInclude Include="Arduino\Print.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="interfaces\IOnOff.h" />
     <ClInclude Include="interfaces\IRTC.h" />
@@ -56,6 +61,7 @@
     <ClInclude Include="LM35TempSensorComponent.h" />
     <ClInclude Include="RelayComponent.h" />
     <ClInclude Include="RTCComponent.h" />
+    <ClInclude Include="ArduinoString.h" />
     <ClInclude Include="TemperatureChecker.h" />
     <ClInclude Include="UltrasonicDistanceSensorComponent.h" />
     <ClInclude Include="Utils\Array.h" />

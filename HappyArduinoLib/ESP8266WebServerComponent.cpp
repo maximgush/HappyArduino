@@ -5,6 +5,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
+#define WIFI_CONNECTION_PIN 2
+
 
 ESP8266WebServer * ESP8266WebServerComponent::server = nullptr;
 
@@ -24,9 +26,8 @@ void ESP8266WebServerComponent::handleRoot()
 		<body>\
 			<h1 style=\"font-family:verdana;\">Happy Hydroponics</h1>";
 
-	Component ** components = ComponentsContainer::Instance().GetComponentsArray();
-	short size = ComponentsContainer::Instance().GetComponentsArraySize();
-	for( short i = 0; i < size; i++ )
+	const CArray<Component*>& components = ComponentsContainer::Instance().GetComponentsArray();
+	for( short i = 0; i < components.Size(); i++ )
 	{
 		htmlCode += String( "<h4>Компонент " ) + components[i]->GetName() + "</h4>";
 
@@ -78,23 +79,21 @@ ESP8266WebServerComponent::ESP8266WebServerComponent( const char* _name, const c
 {
 }
 
-void ESP8266WebServerComponent::Init()
+void ESP8266WebServerComponent::initializeWiFiConnection()
 {
-	if( server == nullptr )
-	{
-		server = new ESP8266WebServer( port );
-	}
-	//----------------------------------------------------- 
 	Serial.println( "Initialize WiFi" );
 	// Инициализируем WiFi и Web-сервер
 	WiFi.mode( WIFI_STA );
 	WiFi.begin( WiFiConnectionName, password );
 
 	// Wait for connection
+	pinMode(WIFI_CONNECTION_PIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
 	while( WiFi.status() != WL_CONNECTED )
 	{
+		digitalWrite(WIFI_CONNECTION_PIN, HIGH);
 		delay( 500 );
 		Serial.print( "." );
+		digitalWrite(WIFI_CONNECTION_PIN, LOW);
 	}
 
 	WiFiLocalIP = WiFi.localIP().toString();
@@ -104,6 +103,18 @@ void ESP8266WebServerComponent::Init()
 	Serial.println( WiFiConnectionName );
 	Serial.print( "IP address: " );
 	Serial.println( WiFiLocalIP );
+	Serial.print("MAC address: ");
+	Serial.println( WiFi.macAddress() );
+}
+
+void ESP8266WebServerComponent::Init()
+{	
+	initializeWiFiConnection();	
+
+	if( server == nullptr )
+	{
+		server = new ESP8266WebServer( port );
+	}	
 
 	if( MDNS.begin( "esp8266" ) )
 	{

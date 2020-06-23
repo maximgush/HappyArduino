@@ -1,10 +1,11 @@
 #pragma once
 
+#include <common.h>
 #include <initializer_list>
 #include <string>
 
 #define assert(a)
-
+/*
 template<class T>
 T min( const T& a, const T& b )
 {
@@ -22,7 +23,7 @@ T clamp( const T& val, const T& a, const T& b )
 {
 	return val < min ? min : ( val > max ? max : val );
 }
-
+*/
 template <class T>
 class CArray {
  public:

@@ -1,6 +1,4 @@
-#pragma once
-
-#include "RTCComponent.h"
+#include <RTCComponent.h>
 #include <RTClib.h>
 #include <Wire.h>
 
@@ -30,6 +28,12 @@ void RTCComponent::GetKeyValues( KeyValue *keyValues, short &size ) const
 	keyValues[size] = KeyValue( "Текущее дата", timeStr ); size++;
 	keyValues[size] = KeyValue( "Температура", String( rtc.getTemperature() ) ); size++;
 };
+
+CDateTime RTCComponent::GetCurrentTime() const
+{
+	DateTime nowTime = rtc.now();
+	return CDateTime(nowTime.year(), nowTime.month(), nowTime.day(), nowTime.hour(), nowTime.minute(), nowTime.second());
+}
 
 void RTCComponent::SetCurrentDateAndTime()
 {

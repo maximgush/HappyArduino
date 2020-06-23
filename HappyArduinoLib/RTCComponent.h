@@ -1,7 +1,8 @@
 #pragma once
 
-#include "interfaces/IRTC.h"
-#include "Component.h"
+#include <interfaces/IRTC.h>
+#include <Component.h>
+#include <DateTime.h>
 
 #include <RTClib.h>
 
@@ -12,8 +13,11 @@ public:
 
 	// Component
 	virtual void Init() override;
-	virtual void OnFrame() override {};
+	virtual void OnFrame() override;
 	virtual void GetKeyValues( KeyValue *keyValues, short &size ) const override;
+	
+	// IRTC
+	virtual CDateTime GetCurrentTime() const override;
 	
 	// Метод для установки текущего времени и даты в сенсор
 	// Текущая время и даты берутся системные и хардкодятся при компиляции программы
@@ -22,6 +26,6 @@ public:
 	// (например Ардуино UNO/Nano/...) иначе будет значительное отставание времени сенсора
 	void SetCurrentDateAndTime();
 
-public:
+private:
 	RTC_DS3231 rtc;
 };

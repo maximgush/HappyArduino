@@ -1,11 +1,8 @@
 // Интерфейс объекта, который предоставляет данные о реальном времени
+#include <DateTime.h>
+
 class IRTC {
 public:
-	struct DateTime
-	{
-
-	};
-
 	// Возвращает текущие дату и время
-	virtual DateTime GetCurrentTime() const = 0;
+	virtual CDateTime GetCurrentTime() const = 0;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Component.h"
-#include "List.h"
+#include <Component.h>
+#include <Utils\\List.h>
 
 class ScheduledEventManagerComponent : Component
 {

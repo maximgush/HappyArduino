@@ -11,7 +11,7 @@ public:
 	// Component
 	virtual void Init() override;
 	virtual void OnFrame() override;
-	virtual void GetKeyValues( KeyValue *keyValues, short &size ) override;
+	virtual void GetKeyValues( KeyValue *keyValues, short &size ) const override;
 	
 	// IOnOff
 	virtual bool IsOn() const override;

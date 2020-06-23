@@ -16,7 +16,7 @@ public:
 	// Component
 	virtual void Init() override;	
 	virtual void OnFrame() override;
-	virtual void GetKeyValues( KeyValue *keyValues, short &size ) override;
+	virtual void GetKeyValues( KeyValue *keyValues, short &size ) const override;
 
 private:
 	static ESP8266WebServer * server;
@@ -25,6 +25,7 @@ private:
 	int port;
 	String WiFiLocalIP;
 
+	void initializeWiFiConnection();
 	static void handleRoot();
 	static void handleNotFound();
-}
+};
